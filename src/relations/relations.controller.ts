@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
 import { RelationsService } from './relations.service';
 import { CreateRelationDto } from './dto/create-relation.dto';
 import { UpdateRelationDto } from './dto/update-relation.dto';
+import { HttpExceptionFilter } from 'src/exception/error.exception';
 
+
+@UseFilters(HttpExceptionFilter)
 @Controller('relations')
 export class RelationsController {
   constructor(private readonly relationsService: RelationsService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   create(@Body() createRelationDto: CreateRelationDto) {
     return this.relationsService.create(createRelationDto);
   }

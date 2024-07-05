@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters} from '@nestjs/common';
 import { SocialMediaService } from './social_media.service';
 import { CreateSocialMediaDto } from './dto/create-social_media.dto';
 import { UpdateSocialMediaDto } from './dto/update-social_media.dto';
+import { HttpExceptionFilter } from 'src/exception/error.exception';
 
+
+@UseFilters(HttpExceptionFilter)
 @Controller('social-media')
 export class SocialMediaController {
   constructor(private readonly socialMediaService: SocialMediaService) {}

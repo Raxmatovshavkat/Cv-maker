@@ -26,8 +26,9 @@ export class User {
     @Prop()
     email: string;
 
-    @Prop({ required: true, isRequired: true, type: [{ type: mongoose.Schema.Types.ObjectId, ref: "releations" }] })
-    relationId:string;
+
+    @Prop()
+    password:string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ExpreinceService } from './expreince.service';
 import { CreateExpreinceDto } from './dto/create-expreince.dto';
 import { UpdateExpreinceDto } from './dto/update-expreince.dto';
+import { HttpExceptionFilter } from 'src/exception/error.exception';
 
+
+@UseFilters(HttpExceptionFilter)
 @Controller('expreince')
 export class ExpreinceController {
   constructor(private readonly expreinceService: ExpreinceService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   async create(@Body() createExpreinceDto: CreateExpreinceDto) {
     return await this.expreinceService.create(createExpreinceDto);
   }

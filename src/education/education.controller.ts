@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
 import { EducationService } from './education.service';
 import { CreateEducationDto } from './dto/create-education.dto';
 import { UpdateEducationDto } from './dto/update-education.dto';
+import { HttpExceptionFilter } from 'src/exception/error.exception';
 
+
+@UseFilters(HttpExceptionFilter)
 @Controller('education')
 export class EducationController {
   constructor(private readonly educationService: EducationService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   async create(@Body() createEducationDto: CreateEducationDto) {
     return await this.educationService.create(createEducationDto);
   }

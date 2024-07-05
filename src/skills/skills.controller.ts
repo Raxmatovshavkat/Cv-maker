@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters} from '@nestjs/common';
 import { SkillsService } from './skills.service';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
+import { HttpExceptionFilter } from 'src/exception/error.exception';
 
+
+@UseFilters(HttpExceptionFilter)
 @Controller('skills')
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
