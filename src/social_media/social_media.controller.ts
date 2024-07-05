@@ -19,16 +19,16 @@ export class SocialMediaController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.socialMediaService.findOne(+id);
+    return this.socialMediaService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSocialMediaDto: UpdateSocialMediaDto) {
-    return this.socialMediaService.update(+id, updateSocialMediaDto);
+    return this.socialMediaService.update(id, updateSocialMediaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.socialMediaService.remove(+id);
+    return this.socialMediaService.remove(id);
   }
 }

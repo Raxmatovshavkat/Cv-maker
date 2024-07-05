@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRelationDto } from './dto/create-relation.dto';
 import { UpdateRelationDto } from './dto/update-relation.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Relation } from './entities/relation.entity';
 
 @Injectable()
 export class RelationsService {
-  create(createRelationDto: CreateRelationDto) {
-    return 'This action adds a new relation';
+  constructor(@InjectModel('relations') private readonly relationService:Model<Relation>){}
+
+  async create(createrelationDto: CreateRelationDto) {
+    return await new this.relationService(createrelationDto).save();
   }
 
-  findAll() {
-    return `This action returns all relations`;
+  async findAll() {
+    return await this.relationService.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} relation`;
+  async findOne(id: string) {
+    return await this.relationService.findById(id);
   }
 
-  update(id: number, updateRelationDto: UpdateRelationDto) {
-    return `This action updates a #${id} relation`;
+  async update(id: string, updaterelationDto: UpdateRelationDto) {
+    return await this.relationService.findByIdAndUpdate(id, updaterelationDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} relation`;
+  async remove(id: string) {
+    return await this.relationService.findByIdAndUpdate(id);
   }
 }

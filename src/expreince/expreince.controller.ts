@@ -8,27 +8,27 @@ export class ExpreinceController {
   constructor(private readonly expreinceService: ExpreinceService) {}
 
   @Post()
-  create(@Body() createExpreinceDto: CreateExpreinceDto) {
-    return this.expreinceService.create(createExpreinceDto);
+  async create(@Body() createExpreinceDto: CreateExpreinceDto) {
+    return await this.expreinceService.create(createExpreinceDto);
   }
 
   @Get()
-  findAll() {
-    return this.expreinceService.findAll();
+  async findAll() {
+    return await this.expreinceService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.expreinceService.findOne(+id);
+    async  findOne(@Param('id') id: string) {
+    return await this.expreinceService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExpreinceDto: UpdateExpreinceDto) {
-    return this.expreinceService.update(+id, updateExpreinceDto);
+    async  update(@Param('id') id: string, @Body() updateExpreinceDto: UpdateExpreinceDto) {
+    return await this.expreinceService.update(id, updateExpreinceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.expreinceService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.expreinceService.remove(id);
   }
 }

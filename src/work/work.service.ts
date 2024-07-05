@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWorkDto } from './dto/create-work.dto';
 import { UpdateWorkDto } from './dto/update-work.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Work } from './entities/work.entity';
 
 @Injectable()
 export class WorkService {
-  create(createWorkDto: CreateWorkDto) {
-    return 'This action adds a new work';
+  constructor(@InjectModel('works') private readonly workService:Model<Work>){}
+  async create(createworkDto: CreateWorkDto) {
+    return await new this.workService(createworkDto).save();
   }
 
-  findAll() {
-    return `This action returns all work`;
+  async findAll() {
+    return await this.workService.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} work`;
+  async findOne(id: string) {
+    return await this.workService.findById(id);
   }
 
-  update(id: number, updateWorkDto: UpdateWorkDto) {
-    return `This action updates a #${id} work`;
+  async update(id: string, updateworkDto: UpdateWorkDto) {
+    return await this.workService.findByIdAndUpdate(id, updateworkDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} work`;
+  async remove(id: string) {
+    return await this.workService.findByIdAndUpdate(id);
   }
 }

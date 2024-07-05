@@ -1,1 +1,4 @@
-export class CreateWorkDto {}
+export class CreateWorkDto {
+    description:string;
+    isActive:boolean;
+}

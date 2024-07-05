@@ -6,5 +6,6 @@ export class CreateUserDto {
     postcode: string
     phone: string
     email: string
+    relationId:string;
 }
 

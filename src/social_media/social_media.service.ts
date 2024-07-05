@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSocialMediaDto } from './dto/create-social_media.dto';
 import { UpdateSocialMediaDto } from './dto/update-social_media.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { socialMedia } from './entities/social_media.entity';
 
 @Injectable()
 export class SocialMediaService {
-  create(createSocialMediaDto: CreateSocialMediaDto) {
-    return 'This action adds a new socialMedia';
+  constructor(@InjectModel('social_media') private readonly socialMediaService:Model<socialMedia>){}
+  async create(createsocialMediaDto: CreateSocialMediaDto) {
+    return await new this.socialMediaService(createsocialMediaDto).save();
   }
 
-  findAll() {
-    return `This action returns all socialMedia`;
+  async findAll() {
+    return await this.socialMediaService.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} socialMedia`;
+  async findOne(id: string) {
+    return await this.socialMediaService.findById(id);
   }
 
-  update(id: number, updateSocialMediaDto: UpdateSocialMediaDto) {
-    return `This action updates a #${id} socialMedia`;
+  async update(id: string, updatesocialMediaDto: UpdateSocialMediaDto) {
+    return await this.socialMediaService.findByIdAndUpdate(id, updatesocialMediaDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} socialMedia`;
+  async remove(id: string) {
+    return await this.socialMediaService.findByIdAndUpdate(id);
   }
 }

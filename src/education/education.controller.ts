@@ -8,27 +8,27 @@ export class EducationController {
   constructor(private readonly educationService: EducationService) {}
 
   @Post()
-  create(@Body() createEducationDto: CreateEducationDto) {
-    return this.educationService.create(createEducationDto);
+  async create(@Body() createEducationDto: CreateEducationDto) {
+    return await this.educationService.create(createEducationDto);
   }
 
   @Get()
-  findAll() {
-    return this.educationService.findAll();
+  async findAll() {
+    return await this.educationService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.educationService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.educationService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEducationDto: UpdateEducationDto) {
-    return this.educationService.update(+id, updateEducationDto);
+  async update(@Param('id') id: string, @Body() updateEducationDto: UpdateEducationDto) {
+    return await this.educationService.update(id, updateEducationDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.educationService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.educationService.remove(id);
   }
 }

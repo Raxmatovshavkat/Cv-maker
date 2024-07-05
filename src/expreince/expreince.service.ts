@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateExpreinceDto } from './dto/create-expreince.dto';
 import { UpdateExpreinceDto } from './dto/update-expreince.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Expreince } from './entities/expreince.entity';
 
 @Injectable()
 export class ExpreinceService {
-  create(createExpreinceDto: CreateExpreinceDto) {
-    return 'This action adds a new expreince';
+  constructor(@InjectModel('expreinces') private readonly expreinceService:Model<Expreince>){}
+
+  async create(createExpreinceDto: CreateExpreinceDto) {
+    return await new this.expreinceService(createExpreinceDto).save();
   }
 
-  findAll() {
-    return `This action returns all expreince`;
+  async findAll() {
+    return await this.expreinceService.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} expreince`;
+  async findOne(id: string) {
+    return await this.expreinceService.findById(id);
   }
 
-  update(id: number, updateExpreinceDto: UpdateExpreinceDto) {
-    return `This action updates a #${id} expreince`;
+  async update(id: string, updateExpreinceDto: UpdateExpreinceDto) {
+    return await this.expreinceService.findByIdAndUpdate(id, updateExpreinceDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} expreince`;
+  async remove(id: string) {
+    return await this.expreinceService.findByIdAndUpdate(id);
   }
 }

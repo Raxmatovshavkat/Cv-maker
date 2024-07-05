@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEducationDto } from './dto/create-education.dto';
 import { UpdateEducationDto } from './dto/update-education.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Education } from './entities/education.entity';
 
 @Injectable()
 export class EducationService {
-  create(createEducationDto: CreateEducationDto) {
-    return 'This action adds a new education';
+  constructor(@InjectModel('educations') private readonly educationService:Model<Education>){}
+
+  async create(createEducationDto: CreateEducationDto) {
+    return await new this.educationService(createEducationDto).save();
   }
 
-  findAll() {
-    return `This action returns all education`;
+  async findAll() {
+    return await this.educationService.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} education`;
+  async findOne(id: string) {
+    return await this.educationService.findById(id);
   }
 
-  update(id: number, updateEducationDto: UpdateEducationDto) {
-    return `This action updates a #${id} education`;
+  async update(id: string, updateEducationDto: UpdateEducationDto) {
+    return await this.educationService.findByIdAndUpdate(id,updateEducationDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} education`;
+  async remove(id: string) {
+    return await this.educationService.findByIdAndUpdate(id);
   }
 }
