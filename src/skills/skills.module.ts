@@ -11,7 +11,8 @@ import { APP_PIPE } from '@nestjs/core';
   providers: [SkillsService, {
     provide: APP_PIPE,
     useValue: new ValidationPipe({
-      whitelist: true
+      whitelist: true,
+      transform:true
     })
   }],
 })

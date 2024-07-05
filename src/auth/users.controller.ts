@@ -17,7 +17,7 @@ export class UsersController {
   @Post('login')
   @UsePipes(ValidationPipe)
   async login(@Body() createUserDto: CreateLoginDto) {
-    return await this.usersService.login(createUserDto);
+    return await this.usersService.signIn(createUserDto);
   }
 
   @Get(':id')

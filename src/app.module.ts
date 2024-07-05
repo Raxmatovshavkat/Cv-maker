@@ -10,7 +10,7 @@ import { SocialMediaModule } from './social_media/social_media.module';
 import { EducationModule } from './education/education.module';
 import { LogModule } from './log/log.module';
 import { MyMiddleware } from './middleware/middleware.middleware';
-console.log(process.env.mongoURI);
+// console.log(process.env.mongoURI);
 
 
 @Module({
