@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UsersModule } from './auth/users.module';
+import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ExpreinceModule } from './expreince/expreince.module';
@@ -10,9 +10,14 @@ import { SocialMediaModule } from './social_media/social_media.module';
 import { EducationModule } from './education/education.module';
 import { LogModule } from './log/log.module';
 import { MyMiddleware } from './middleware/middleware.middleware';
-// console.log(process.env.mongoURI);
+import * as dotenv from "dotenv"
+import { UserModule } from './user/user.module';
+import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 
+dotenv.config()
 
+const mongoURI = process.env.mongoURI
+console.log(mongoURI);
 @Module({
   
   imports: [
@@ -20,8 +25,8 @@ import { MyMiddleware } from './middleware/middleware.middleware';
       envFilePath:".env",
       isGlobal:true
     }),
-    MongooseModule.forRoot(process.env.mongoURI),
-    UsersModule,
+    MongooseModule.forRoot(mongoURI),
+    AuthModule,
     ExpreinceModule,
     WorkModule,
     SkillsModule,
@@ -29,7 +34,9 @@ import { MyMiddleware } from './middleware/middleware.middleware';
     SocialMediaModule,
     EducationModule,
     AppModule,
-    LogModule
+    LogModule,
+    UserModule,
+    RefreshTokenModule
   ],
   controllers: [],
   providers: [],
@@ -39,6 +46,5 @@ export class AppModule implements NestModule {
     consumer
       .apply(MyMiddleware)
       .forRoutes("*");
-
   }
 }
