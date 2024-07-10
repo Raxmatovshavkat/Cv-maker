@@ -1,3 +1,4 @@
+import { FilesModule } from './files/files.module';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
@@ -36,7 +37,8 @@ console.log(mongoURI);
     AppModule,
     LogModule,
     UserModule,
-    RefreshTokenModule
+    RefreshTokenModule,
+    FilesModule
   ],
   controllers: [],
   providers: [],
