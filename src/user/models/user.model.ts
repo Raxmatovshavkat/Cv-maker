@@ -27,8 +27,6 @@ export class User {
     @Prop()
     email: string;
 
-    @Prop()
-    avatar_id:number
 
     @Prop()
     password: string;

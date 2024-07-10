@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { File, FileDocument } from './entities/file.entity';
 
 @Injectable()
 export class FilesService {
-  create(createFileDto: CreateFileDto) {
-    return 'This action adds a new file';
+  constructor(@InjectModel("Files") private readonly fileModel: Model<FileDocument>) { }
+
+  async create(createFileDto: CreateFileDto) {
+    return await new this.fileModel(createFileDto).save();
   }
 
-  findAll() {
-    return `This action returns all files`;
+  async findAll() {
+    return await this.fileModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} file`;
+  async findOne(id: string) {
+    return await this.fileModel.findById(id).exec();
   }
 
-  update(id: number, updateFileDto: UpdateFileDto) {
-    return `This action updates a #${id} file`;
+  async update(id: string, updateFileDto: UpdateFileDto) {
+    return await this.fileModel.findByIdAndUpdate(id, updateFileDto, { new: true }).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} file`;
+  async remove(id: string) {
+    return await this.fileModel.findByIdAndDelete(id).exec();
   }
 }
