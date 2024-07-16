@@ -22,7 +22,7 @@ export class FilesController {
     }),
   }))
   async create(@UploadedFile() file: Express.Multer.File, @Body() createFileDto: CreateFileDto) {
-    console.log('Uploaded file:', file); // Log the file object
+    console.log('Uploaded file:', file); 
     if (!file) {
       throw new Error('File upload failed');
     }

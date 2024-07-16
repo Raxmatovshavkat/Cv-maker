@@ -1,26 +1,27 @@
-import { Injectable, UseGuards } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateRegisterDto } from '../user/dto/register-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { CreateLoginDto } from '../user/dto/login-user.dto ';
-import * as dotenv from "dotenv"
+import * as dotenv from 'dotenv';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
-dotenv.config()
+import { UserDocument } from '../user/models/user.model';
+dotenv.config();
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly authService: UserService,
     private readonly jwtService: JwtService,
-    private readonly refreshService: RefreshTokenService
+    private readonly refreshService: RefreshTokenService,
   ) { }
 
-  async register(createUserDto: CreateRegisterDto) {
+  async register(createUserDto: CreateRegisterDto): Promise<UserDocument> {
     return this.authService.register(createUserDto);
   }
 
-  async signIn(createLoginDto: CreateLoginDto): Promise<{ access_token: string, refresh_token: string }> {
-    const user = await this.authService.signIn(createLoginDto);
+  async signIn(createLoginDto: CreateLoginDto): Promise<{ access_token: string; refresh_token: string }> {
+    const user: UserDocument = await this.authService.signIn(createLoginDto);
 
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
@@ -39,20 +40,21 @@ export class AuthService {
       access_token: accessToken,
       refresh_token: refreshToken,
     };
-
   }
+
   async refreshAccessToken(refreshToken: string): Promise<{ access_token: string }> {
     return this.refreshService.refreshAccessToken(refreshToken);
   }
-  async all() {
 
-    return this.authService.find();
+  async all(): Promise<UserDocument[]> {
+    return await this.authService.find();
   }
-  async me(id: string) {
+
+  async me(id: string): Promise<UserDocument> {
     return this.authService.findById(id);
   }
 
-  async logout(userId: string) {
+  async logout(userId: string): Promise<UserDocument> {
     await this.refreshService.removeTokensForUser(userId);
     return this.authService.findByIdAndDelete(userId);
   }

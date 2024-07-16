@@ -14,6 +14,7 @@ import { MyMiddleware } from './middleware/middleware.middleware';
 import * as dotenv from "dotenv"
 import { UserModule } from './user/user.module';
 import { RefreshTokenModule } from './refresh-token/refresh-token.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 dotenv.config()
 
@@ -38,7 +39,16 @@ console.log(mongoURI);
     LogModule,
     UserModule,
     RefreshTokenModule,
-    FilesModule
+    FilesModule,
+    MailerModule.forRoot({
+      transport: {
+        host: process.env.EMAIL_HOST,
+        auth: {
+          user: process.env.EMAIL_USERNAME,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      },
+    }),
   ],
   controllers: [],
   providers: [],

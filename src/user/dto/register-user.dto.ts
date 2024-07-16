@@ -1,6 +1,9 @@
 import { IsNotEmpty, IsNumberString, IsOptional, IsPhoneNumber, IsString, IsStrongPassword } from "class-validator"
 
 export class CreateRegisterDto {
+    @IsOptional()
+    _id: string;
+
     @IsString()
     @IsNotEmpty()
     firstname: string;
@@ -23,7 +26,6 @@ export class CreateRegisterDto {
 
     @IsString()
     @IsNotEmpty()
-    @IsPhoneNumber()
     phone: string;
 
     @IsString()
