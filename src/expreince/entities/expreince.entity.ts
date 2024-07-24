@@ -20,9 +20,11 @@ export class Expreince {
     @Prop()
     end_time: Date;
 
+    @Prop()
+    description: string;
 
-    @Prop({ required: true, isRequired: true, type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Works" }] })
-    workId: string
+    @Prop({ default: false })
+    is_active: boolean;
 }
 
 export const ExpreinceSchema = SchemaFactory.createForClass(Expreince);

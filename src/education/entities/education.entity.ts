@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 
 export type EducationDocument = HydratedDocument<Education>;
 
@@ -7,9 +7,6 @@ export type EducationDocument = HydratedDocument<Education>;
 export class Education {
     @Prop()
     title: string;
-
-    @Prop()
-    link: string;
 
     @Prop()
     start_time: Date;
@@ -27,7 +24,11 @@ export class Education {
     description: string;
 
     @Prop()
-    isActive:boolean
+    is_active: boolean
+
+    @Prop({type: Types.ObjectId, ref: () => File})
+    education_logo_id: number
+    
 }
 
 export const EducationSchema = SchemaFactory.createForClass(Education);

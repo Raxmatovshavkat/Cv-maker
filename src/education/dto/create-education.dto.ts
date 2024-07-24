@@ -1,22 +1,18 @@
-import { IsNotEmpty, IsString, IsNumberString, IsNumber, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsBoolean } from 'class-validator';
 
 export class CreateEducationDto {
     @IsString()
     @IsNotEmpty()
-    title:string;
+    title: string;
     @IsString()
-    @IsNotEmpty()
-    link:string;
-    @IsString()
-    @IsNotEmpty()
-    position:string;
-    @IsNotEmpty()
+    position: string;
     @IsNumber()
-    faculty:number;
+    faculty: number;
     @IsString()
-    @IsNotEmpty()
-    description:string;
+    description: string;
     @IsBoolean()
-    @IsNotEmpty()
-    isActive:boolean;
+    is_active: boolean;
+    @IsNumber()
+    education_logo_id: number
+
 }

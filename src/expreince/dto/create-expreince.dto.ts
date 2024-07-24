@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateExpreinceDto {
     @IsString()
@@ -8,10 +8,12 @@ export class CreateExpreinceDto {
     @IsNotEmpty()
     company_address:string;
     @IsString()
-    @IsNotEmpty()
     @IsOptional()
     position:string;
     @IsString()
-    @IsNotEmpty()
-    workId:string;
+    @IsOptional()
+    description: string;
+    @IsBoolean()
+    @IsOptional()
+    is_active: boolean;
 }

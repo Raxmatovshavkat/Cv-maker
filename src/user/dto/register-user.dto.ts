@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumberString, IsOptional, IsPhoneNumber, IsString, IsStrongPassword } from "class-validator"
+import { IsEmail, IsNotEmpty, IsNumberString, IsOptional, IsPhoneNumber, IsString, IsStrongPassword } from "class-validator"
 
 export class CreateRegisterDto {
     @IsOptional()
@@ -17,24 +17,21 @@ export class CreateRegisterDto {
     address: string
 
     @IsString()
-    @IsNotEmpty()
     city: string
 
     @IsString()
-    @IsNotEmpty()
     postcode: string
 
     @IsString()
-    @IsNotEmpty()
     phone: string;
 
     @IsString()
     @IsNotEmpty()
+    @IsEmail()
     email: string;
     
 
     @IsNotEmpty()
-    @IsString()
     @IsStrongPassword()
     password: string;
 }
