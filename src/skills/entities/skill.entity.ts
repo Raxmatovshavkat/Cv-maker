@@ -6,13 +6,13 @@ export type SkillDocument = HydratedDocument<Skill>;
 @Schema()
 export class Skill {
     @Prop()
-    hardSkills: Array<string>;
+    name:string;
 
     @Prop()
-    softSkills:Array<string>;
+    type:string;
 
     @Prop()
-    language:Array<string>;
+    is_active:boolean;
    
 }
 

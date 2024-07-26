@@ -21,6 +21,11 @@ export class EducationController {
     return await this.educationService.findAll();
   }
 
+  @Get('active')
+  async findAllActive() {
+    return await this.educationService.findAllActive();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.educationService.findOne(id);

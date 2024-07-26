@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -15,6 +15,13 @@ export class SkillsService {
 
   async findAll() {
     return await this.skillService.find();
+  }
+  async findAllActive(): Promise<Skill[]> {
+    const skills = await this.skillService.find({ is_active: true }).exec();
+    if (!skills || skills.length === 0) {
+      throw new NotFoundException('No active opinions found');
+    }
+    return skills;
   }
 
   async findOne(id: string) {

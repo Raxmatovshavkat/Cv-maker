@@ -16,4 +16,7 @@ export class CreateRelationDto {
     @IsString()
     @IsNotEmpty()
     skillId:string;
+    @IsString()
+    @IsNotEmpty()
+    languageId: string;
 }

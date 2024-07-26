@@ -4,7 +4,6 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ExpreinceModule } from './expreince/expreince.module';
-import { WorkModule } from './work/work.module';
 import { SkillsModule } from './skills/skills.module';
 import { RelationsModule } from './relations/relations.module';
 import { SocialMediaModule } from './social_media/social_media.module';
@@ -18,6 +17,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { LanguagesModule } from './languages/languages.module';
 import { UserMessageModule } from './user_message/user_message.module';
 import { UserOpinionModule } from './user_opinion/user_opinion.module';
+import { RolesModule } from './roles/roles.module';
 
 dotenv.config()
 
@@ -33,7 +33,6 @@ console.log(mongoURI);
     MongooseModule.forRoot(mongoURI),
     AuthModule,
     ExpreinceModule,
-    WorkModule,
     SkillsModule,
     RelationsModule,
     SocialMediaModule,
@@ -55,6 +54,7 @@ console.log(mongoURI);
     LanguagesModule,
     UserMessageModule,
     UserOpinionModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [],

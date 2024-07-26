@@ -33,6 +33,10 @@ export class FilesController {
   async findAll() {
     return await this.filesService.findAll();
   }
+  @Get('active')
+  async findAllActive() {
+    return await this.filesService.findAllActive();
+  }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {

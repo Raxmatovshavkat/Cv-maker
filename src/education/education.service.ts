@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEducationDto } from './dto/create-education.dto';
 import { UpdateEducationDto } from './dto/update-education.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -16,6 +16,14 @@ export class EducationService {
   async findAll() {
     return await this.educationService.find();
   }
+  
+  async findAllActive(): Promise<Education[]> {
+    const education = await this.educationService.find({ is_active: true }).exec();
+    if (!education || education.length === 0) {
+      throw new NotFoundException('No active opinions found');
+    }
+    return education;
+  }
 
   async findOne(id: string) {
     return await this.educationService.findById(id);
@@ -26,6 +34,8 @@ export class EducationService {
   }
 
   async remove(id: string) {
-    return await this.educationService.findByIdAndUpdate(id);
+    return await this.educationService.findByIdAndDelete(id);
   }
+
+
 }

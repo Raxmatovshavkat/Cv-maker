@@ -28,6 +28,12 @@ export class User {
 
     @Prop()
     password: string;
+
+    @Prop()
+    avatar_id:number;
+
+    @Prop()
+    about_text:string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

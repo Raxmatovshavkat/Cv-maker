@@ -16,6 +16,9 @@ export class socialMedia {
     
     @Prop()
     accountName:string;
+
+    @Prop()
+    icon_image_id:number
 }
 
 export const socialMediaSchema = SchemaFactory.createForClass(socialMedia);

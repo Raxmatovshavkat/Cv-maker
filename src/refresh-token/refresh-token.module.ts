@@ -5,7 +5,7 @@ import { RefreshTokenService } from './refresh-token.service';
 import {  RefreshTokenSchema } from './entities/refresh-token.entity';
 import * as dotenv from 'dotenv';
 dotenv.config()
-console.log(process.env.accesTokenKey);
+// console.log(process.env.ACCESS_TOKEN_SECRET);
 
 @Module({
   imports: [

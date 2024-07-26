@@ -1,4 +1,4 @@
-import { ArrayMinSize, IsArray, IsBoolean, IsNotEmpty, isNotEmpty, IsString } from "class-validator";
+import { ArrayMinSize, IsArray, IsBoolean, IsNotEmpty, isNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateSocialMediaDto {
     @IsString()
@@ -13,4 +13,7 @@ export class CreateSocialMediaDto {
     @IsString()
     @IsNotEmpty()
     accountName:string;
+
+    @IsOptional()
+    icon_image_id:number
 }

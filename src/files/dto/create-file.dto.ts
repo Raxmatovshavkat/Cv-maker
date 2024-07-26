@@ -7,4 +7,6 @@ export class CreateFileDto {
     @IsString()
     table_name: string;
 
+    @IsBoolean()
+    is_active:boolean
 }

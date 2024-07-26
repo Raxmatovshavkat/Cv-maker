@@ -20,6 +20,11 @@ export class SocialMediaController {
     return this.socialMediaService.findAll();
   }
 
+  @Get('active')
+  findAllActive() {
+    return this.socialMediaService.findAllActive();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.socialMediaService.findOne(id);

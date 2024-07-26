@@ -34,5 +34,11 @@ export class CreateRegisterDto {
     @IsNotEmpty()
     @IsStrongPassword()
     password: string;
+
+    @IsOptional()
+    avatar_id:number
+
+    @IsString()
+    about_text:string
 }
 

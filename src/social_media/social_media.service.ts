@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSocialMediaDto } from './dto/create-social_media.dto';
 import { UpdateSocialMediaDto } from './dto/update-social_media.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -14,6 +14,13 @@ export class SocialMediaService {
 
   async findAll() {
     return await this.socialMediaService.find();
+  }
+  async findAllActive(): Promise<socialMedia[]> {
+    const social_media = await this.socialMediaService.find({ is_active: true }).exec();
+    if (!social_media || social_media.length === 0) {
+      throw new NotFoundException('No active opinions found');
+    }
+    return social_media;
   }
 
   async findOne(id: string) {

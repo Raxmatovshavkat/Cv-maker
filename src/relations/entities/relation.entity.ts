@@ -19,6 +19,9 @@ export class Relation {
 
     @Prop({ required: true, isRequired: true, type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Skills" }] })
     skillId: string
+
+    @Prop({ required: true, isRequired: true, type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Languages" }] })
+    languageId: string
 }
 
 export const RelationSchema = SchemaFactory.createForClass(Relation);

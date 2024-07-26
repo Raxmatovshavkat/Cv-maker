@@ -26,6 +26,6 @@ export class ExpreinceService {
   }
 
   async remove(id: string) {
-    return await this.expreinceService.findByIdAndUpdate(id);
+    return await this.expreinceService.findByIdAndDelete(id);
   }
 }

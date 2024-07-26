@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -15,6 +15,14 @@ export class FilesService {
 
   async findAll() {
     return await this.fileModel.find().exec();
+  }
+  
+  async findAllActive(): Promise<File[]> {
+    const file = await this.fileModel.find({ is_active: true }).exec();
+    if (!file || file.length === 0) {
+      throw new NotFoundException('No active opinions found');
+    }
+    return file;
   }
 
   async findOne(id: string) {

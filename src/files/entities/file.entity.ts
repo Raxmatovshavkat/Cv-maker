@@ -10,6 +10,9 @@ export class File {
 
     @Prop()
     table_name: string;
+
+    @Prop()
+    is_active:boolean
 }
 
 export const FileSchema = SchemaFactory.createForClass(File);
