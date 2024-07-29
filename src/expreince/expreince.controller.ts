@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseFilters, UsePipes, ValidationPipe, Put } from '@nestjs/common';
 import { ExpreinceService } from './expreince.service';
 import { CreateExpreinceDto } from './dto/create-expreince.dto';
 import { UpdateExpreinceDto } from './dto/update-expreince.dto';
@@ -27,7 +27,7 @@ export class ExpreinceController {
     return await this.expreinceService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
     async  update(@Param('id') id: string, @Body() updateExpreinceDto: UpdateExpreinceDto) {
     return await this.expreinceService.update(id, updateExpreinceDto);
   }

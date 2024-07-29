@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters} from '@nestjs/common';
+import { Controller, Get, Post, Body,  Param, Delete, UseFilters, Put} from '@nestjs/common';
 import { SocialMediaService } from './social_media.service';
 import { CreateSocialMediaDto } from './dto/create-social_media.dto';
 import { UpdateSocialMediaDto } from './dto/update-social_media.dto';
@@ -31,7 +31,7 @@ export class SocialMediaController {
     return this.socialMediaService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateSocialMediaDto: UpdateSocialMediaDto) {
     return this.socialMediaService.update(id, updateSocialMediaDto);
   }

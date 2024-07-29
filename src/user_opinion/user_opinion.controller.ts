@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { UserOpinionService } from './user_opinion.service';
 import { CreateUserOpinionDto } from './dto/create-user_opinion.dto';
 import { UpdateUserOpinionDto } from './dto/update-user_opinion.dto';
@@ -30,7 +30,7 @@ export class UserOpinionController {
     return this.userOpinionService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserOpinionDto: UpdateUserOpinionDto) {
     return this.userOpinionService.update(id, updateUserOpinionDto);
   }
