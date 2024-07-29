@@ -10,7 +10,7 @@ export class FilesService {
   constructor(@InjectModel("Files") private readonly fileModel: Model<FileDocument>) { }
 
   async create(createFileDto: CreateFileDto) {
-    return await new this.fileModel(createFileDto).save();
+    return await this.fileModel.create({...createFileDto});
   }
 
   async findAll() {

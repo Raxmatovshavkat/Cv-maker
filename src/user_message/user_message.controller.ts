@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common'
 import { UserMessageService } from './user_message.service';
 import { CreateUserMessageDto } from './dto/create-user_message.dto';
 import { UpdateUserMessageDto } from './dto/update-user_message.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user-message')
 @Controller('user-message')
 export class UserMessageController {
   constructor(private readonly userMessageService: UserMessageService) {}

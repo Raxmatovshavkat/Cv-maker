@@ -6,8 +6,10 @@ import { CreateLoginDto } from '../user/dto/login-user.dto ';
 import { JwtAuthGuard } from 'src/guard/jwt.guard';
 import { RolesGuard } from 'src/guard/roles.guard';
 import { Roles } from 'src/guard/roles.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('auth')
+@ApiBearerAuth()
 @UseFilters(HttpExceptionFilter)
 @Controller('auth')
 export class AuthController {

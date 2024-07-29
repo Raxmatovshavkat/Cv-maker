@@ -9,4 +9,6 @@ export class CreateFileDto {
 
     @IsBoolean()
     is_active:boolean
+
+    fileName:string
 }

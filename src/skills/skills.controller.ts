@@ -3,8 +3,9 @@ import { SkillsService } from './skills.service';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
 import { HttpExceptionFilter } from 'src/exception/error.exception';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('skills')
 @UseFilters(HttpExceptionFilter)
 @Controller('skills')
 export class SkillsController {

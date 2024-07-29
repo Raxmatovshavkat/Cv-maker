@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserOpinionService } from './user_opinion.service';
 import { CreateUserOpinionDto } from './dto/create-user_opinion.dto';
 import { UpdateUserOpinionDto } from './dto/update-user_opinion.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('user-opinion')
 @Controller('user-opinion')
 export class UserOpinionController {
   constructor(private readonly userOpinionService: UserOpinionService) {}

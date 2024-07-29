@@ -5,7 +5,8 @@ import { UpdateFileDto } from './dto/update-file.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('files')
 @Controller('files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) { }
@@ -26,7 +27,7 @@ export class FilesController {
     if (!file) {
       throw new Error('File upload failed');
     }
-    return await this.filesService.create(createFileDto);
+    return await this.filesService.create({...createFileDto});
   }
 
   @Get()

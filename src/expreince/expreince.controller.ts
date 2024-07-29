@@ -3,8 +3,9 @@ import { ExpreinceService } from './expreince.service';
 import { CreateExpreinceDto } from './dto/create-expreince.dto';
 import { UpdateExpreinceDto } from './dto/update-expreince.dto';
 import { HttpExceptionFilter } from 'src/exception/error.exception';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('expreince')
 @UseFilters(HttpExceptionFilter)
 @Controller('expreince')
 export class ExpreinceController {

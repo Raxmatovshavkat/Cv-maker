@@ -3,8 +3,9 @@ import { SocialMediaService } from './social_media.service';
 import { CreateSocialMediaDto } from './dto/create-social_media.dto';
 import { UpdateSocialMediaDto } from './dto/update-social_media.dto';
 import { HttpExceptionFilter } from 'src/exception/error.exception';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('social-media')
 @UseFilters(HttpExceptionFilter)
 @Controller('social-media')
 export class SocialMediaController {

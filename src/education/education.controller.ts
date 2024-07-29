@@ -3,8 +3,9 @@ import { EducationService } from './education.service';
 import { CreateEducationDto } from './dto/create-education.dto';
 import { UpdateEducationDto } from './dto/update-education.dto';
 import { HttpExceptionFilter } from 'src/exception/error.exception';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('education')
 @UseFilters(HttpExceptionFilter)
 @Controller('education')
 export class EducationController {

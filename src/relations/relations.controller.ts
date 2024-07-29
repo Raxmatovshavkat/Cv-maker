@@ -3,8 +3,9 @@ import { RelationsService } from './relations.service';
 import { CreateRelationDto } from './dto/create-relation.dto';
 import { UpdateRelationDto } from './dto/update-relation.dto';
 import { HttpExceptionFilter } from 'src/exception/error.exception';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('relations')
 @UseFilters(HttpExceptionFilter)
 @Controller('relations')
 export class RelationsController {
