@@ -14,16 +14,17 @@ export class RolesService {
 
   async findAll() {
     try {
-      const role = await this.roleService.find()
-      if (role) {
-        throw new NotFoundException()
+      const roles = await this.roleService.find();
+      if (!roles || roles.length === 0) {
+        throw new NotFoundException('No roles found');
       }
-      return role
+      return roles;
     } catch (error) {
-      console.log(error.message)
-      throw new InternalServerErrorException()
+      console.log(error.message);
+      throw new InternalServerErrorException();
     }
   }
+
 
   async findOne(id: string) {
     try {

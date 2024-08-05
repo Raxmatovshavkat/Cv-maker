@@ -5,5 +5,4 @@ export class CreateRoleDto {
     name: string;
     @IsBoolean()
     is_active: boolean;
-    userId: string;
 }

@@ -73,6 +73,5 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 
-isactive borlariga ikkita get yozish kerak activga bitta inactivga bitta
 delete ham ikkita birinchisi o'chirib tashlash ikkinchisi isActiveni false qilib quyadi
 
