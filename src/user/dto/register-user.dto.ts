@@ -8,20 +8,25 @@ export class CreateRegisterDto {
 
     @IsString()
     @IsNotEmpty()
+    @IsOptional()
     firstname: string;
 
     @IsString()
     @IsNotEmpty()
+    @IsOptional()
     lastname: string;
 
     @IsString()
     @IsOptional()
+    @IsOptional()
     address: string
 
     @IsString()
+    @IsOptional()
     city: string
 
     @IsString()
+    @IsOptional()
     postcode: string
 
     @IsString()
@@ -40,9 +45,11 @@ export class CreateRegisterDto {
     password: string;
 
     @IsOptional()
+    @IsOptional()
     avatar_id:number
 
     @IsString()
+    @IsOptional()
     about_text:string
 }
 

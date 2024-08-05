@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseFilters, UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseFilters, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateRegisterDto } from '../user/dto/register-user.dto';
 import { HttpExceptionFilter } from 'src/exception/error.exception';

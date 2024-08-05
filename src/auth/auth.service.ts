@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { CreateRegisterDto } from '../user/dto/register-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
@@ -17,41 +17,70 @@ export class AuthService {
   ) { }
 
   async register(createUserDto: CreateRegisterDto): Promise<UserDocument> {
-    return this.authService.register(createUserDto);
+   try {
+     const user= this.authService.register(createUserDto);
+     if (!user){
+       throw new NotFoundException()
+     }
+     return user
+   } catch (error) {
+    console.log(`User not create ${error.message}`);
+    throw new InternalServerErrorException()
+   }
   }
 
   async signIn(createLoginDto: CreateLoginDto): Promise<{ access_token: string; refresh_token: string }> {
-    const user: UserDocument = await this.authService.signIn(createLoginDto);
-
-    const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
-    const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
-
-    if (!accessTokenSecret || !refreshTokenSecret) {
-      throw new Error('JWT secret not configured');
+    try {
+      const user: UserDocument = await this.authService.signIn(createLoginDto);
+  
+      const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+      const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+  
+      if (!accessTokenSecret || !refreshTokenSecret) {
+        throw new Error('JWT secret not configured');
+      }
+  
+      const payload = { sub: user._id.toString(), email: user.email };
+      const accessToken = this.jwtService.sign(payload, { secret: accessTokenSecret, expiresIn: '5m' });
+      const refreshToken = this.jwtService.sign(payload, { secret: refreshTokenSecret, expiresIn: '7d' });
+  
+      await this.refreshService.storeRefreshToken(refreshToken, user._id.toString());
+  
+      return {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+      };
+    } catch (error) {
+      console.log(`You have this error ${error.message}`);
+      throw new UnauthorizedException()
     }
-
-    const payload = { sub: user._id.toString(), email: user.email };
-    const accessToken = this.jwtService.sign(payload, { secret: accessTokenSecret, expiresIn: '5m' });
-    const refreshToken = this.jwtService.sign(payload, { secret: refreshTokenSecret, expiresIn: '7d' });
-
-    await this.refreshService.storeRefreshToken(refreshToken, user._id.toString());
-
-    return {
-      access_token: accessToken,
-      refresh_token: refreshToken,
-    };
   }
 
   async refreshAccessToken(refreshToken: string): Promise<{ access_token: string }> {
-    return this.refreshService.refreshAccessToken(refreshToken);
+    try {
+      return this.refreshService.refreshAccessToken(refreshToken);
+    } catch (error) {
+      console.log(`You have this error ${error.message}`);
+      throw new UnauthorizedException()
+    }
   }
 
   async all(): Promise<UserDocument[]> {
-    return await this.authService.find();
+    try {
+      return await this.authService.find();
+    } catch (error) {
+      console.log(`You have this error ${error.message}`);
+      throw new UnauthorizedException()
+    }
   }
 
   async me(id: string): Promise<UserDocument> {
-    return this.authService.findById(id);
+    try {
+      return this.authService.findById(id);
+    } catch (error) {
+      console.log(`You have this error ${error.message}`);
+      throw new UnauthorizedException()
+    }
   }
 
   async logout(userId: string): Promise<UserDocument> {

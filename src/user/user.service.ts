@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException, InternalServerErrorException } from '@nestjs/common';
 import { CreateRegisterDto } from './dto/register-user.dto';
 import { CreateLoginDto } from './dto/login-user.dto ';
 import * as bcrypt from 'bcrypt';
@@ -38,37 +38,58 @@ export class UserService {
   }
 
   async signIn(createLoginDto: CreateLoginDto): Promise<UserDocument> {
-    const { email, password } = createLoginDto;
-    const user = await this.userModel.findOne({ email }).exec();
+    try {
+      const { email, password } = createLoginDto;
+      const user = await this.userModel.findOne({ email }).exec();
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new UnauthorizedException('Invalid credentials');
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+
+      return user;
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      throw new Error('Failed to login user');
     }
-
-    return user;
   }
 
   async find(): Promise<UserDocument[]> {
-    const users = await this.userModel.find().exec();
-    if (!users) {
-      throw new NotFoundException('Users not found');
+    try {
+      const users = await this.userModel.find().exec();
+      if (!users) {
+        throw new NotFoundException('Users not found');
+      }
+      return users;
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      throw new Error('Failed to find user');
     }
-    return users;
   }
 
   async findById(id: string): Promise<UserDocument> {
-    const user = await this.userModel.findById(id).exec();
-    if (!user) {
-      throw new NotFoundException('User not found');
+    try {
+      const user = await this.userModel.findById(id).exec();
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return user;
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      throw new InternalServerErrorException()
     }
-    return user;
   }
 
   async findByIdAndDelete(id: string): Promise<UserDocument> {
-    const user = await this.userModel.findByIdAndDelete(id).exec();
-    if (!user) {
-      throw new NotFoundException('User not found');
+    try {
+      const user = await this.userModel.findByIdAndDelete(id).exec();
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return user;
+
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      throw new Error('Failed to find user');
     }
-    return user;
   }
 }

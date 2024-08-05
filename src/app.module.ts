@@ -16,7 +16,6 @@ import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { LanguagesModule } from './languages/languages.module';
 import { UserMessageModule } from './user_message/user_message.module';
-import { UserOpinionModule } from './user_opinion/user_opinion.module';
 import { RolesModule } from './roles/roles.module';
 
 dotenv.config()
@@ -53,7 +52,6 @@ console.log(mongoURI);
     }),
     LanguagesModule,
     UserMessageModule,
-    UserOpinionModule,
     RolesModule,
   ],
   controllers: [],

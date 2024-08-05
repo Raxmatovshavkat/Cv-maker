@@ -18,6 +18,12 @@ export class UserMessage extends Model {
 
     @Prop()
     message: string
+
+    @Prop()
+    star:number
+
+    @Prop()
+    is_active:boolean
 }
 
 export const UserMessageSchema = SchemaFactory.createForClass(UserMessage);
