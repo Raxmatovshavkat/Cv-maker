@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -10,30 +10,85 @@ export class SkillsService {
   constructor(@InjectModel('skills') private readonly skillService: Model<Skill>) { }
 
   async create(createskillDto: CreateSkillDto) {
-    return await new this.skillService(createskillDto).save();
+    try {
+      return await new this.skillService(createskillDto).save();
+    } catch (error) {
+      console.log(`you have this error ${error.message}`);
+      throw new InternalServerErrorException(`${error.message}`)    
+    }
   }
 
   async findAll() {
-    return await this.skillService.find();
+    try {
+      const skill=await this.skillService.find();
+      if (!skill){
+        throw new NotFoundException()
+      }
+      return skill
+    } catch (error) {
+      console.log(`you have this error ${error.message}`);
+      throw new InternalServerErrorException(`${error.message}`)  
+    }
   }
   async findAllActive(): Promise<Skill[]> {
-    const skills = await this.skillService.find({ is_active: true }).exec();
-    if (!skills || skills.length === 0) {
-      throw new NotFoundException('No active opinions found');
+    try {
+      const skills = await this.skillService.find({ is_active: true }).exec();
+      if (!skills || skills.length === 0) {
+        throw new NotFoundException('No active opinions found');
+      }
+      return skills;
+    } catch (error) {
+      console.log(`you have this error ${error.message}`);
+      throw new InternalServerErrorException(`${error.message}`)  
     }
-    return skills;
   }
 
   async findOne(id: string) {
-    return await this.skillService.findById(id);
+    try {
+      const skill= await this.skillService.findById(id);
+      if(!skill){
+        throw new NotFoundException('skill topilmadi')
+      }
+      return skill
+    } catch (error) {
+      console.log(`you have this error ${error.message}`);
+      throw new InternalServerErrorException(`${error.message}`)  
+    }
   }
 
-  async update(id: string, updateskillDto: UpdateSkillDto) {
-    return await this.skillService.findByIdAndUpdate(id, updateskillDto);
+  async update(id: string, updateSkillDto: UpdateSkillDto) {
+    try {
+      const skill = await this.skillService.findById(id);
+      if (!skill) {
+        throw new NotFoundException('Skill not found');
+      }
+
+      await skill.updateOne(updateSkillDto);
+
+      const updatedSkill = await this.skillService.findById(id);
+      return updatedSkill;
+    } catch (error) {
+      console.error(`you have this error: ${error.message}`);
+      throw new InternalServerErrorException(error.message);
+    }
   }
+
 
   async remove(id: string) {
-    return await this.skillService.findByIdAndUpdate(id);
+    try {
+      const skill = await this.skillService.findById(id);
+      if (!skill) {
+        throw new NotFoundException('Skill not found');
+      }
+
+      await skill.deleteOne();
+
+      const updatedSkill = await this.skillService.findById(id);
+      return updatedSkill;
+    } catch (error) {
+      console.error(`you have this error: ${error.message}`);
+      throw new InternalServerErrorException(error.message);
+    }
   }
   async delete(id: string | any) {
     const skill = await this.skillService.findById(id);
