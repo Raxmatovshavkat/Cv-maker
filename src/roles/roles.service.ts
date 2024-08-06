@@ -21,7 +21,7 @@ export class RolesService {
       return roles;
     } catch (error) {
       console.log(error.message);
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(`${error.message}`);
     }
   }
 
@@ -64,15 +64,16 @@ export class RolesService {
       throw new InternalServerErrorException()
     }
   }
-  async delete(id: string | any) {
+  async delete(id: string) {
     const role = await this.roleService.findById(id);
     if (!role) {
-      throw new NotFoundException('role not found');
+      throw new NotFoundException('Role not found');
     }
 
     role.is_active = false;
-    await this.roleService.updateOne(id, role)
+    await this.roleService.updateOne({ _id: id }, { $set: { is_active: false } });
 
-    return { role: 'role status updated to false' };
+    return { message: 'Role status updated to false' };
   }
+
 }

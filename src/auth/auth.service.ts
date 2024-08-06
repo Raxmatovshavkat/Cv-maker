@@ -6,6 +6,7 @@ import { CreateLoginDto } from '../user/dto/login-user.dto ';
 import * as dotenv from 'dotenv';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { UserDocument } from '../user/models/user.model';
+import { OtpService } from 'src/otp/otp.service';
 dotenv.config();
 
 @Injectable()
@@ -14,6 +15,7 @@ export class AuthService {
     private readonly authService: UserService,
     private readonly jwtService: JwtService,
     private readonly refreshService: RefreshTokenService,
+    private readonly otpService:OtpService
   ) { }
 
   async register(createUserDto: CreateRegisterDto): Promise<UserDocument> {
@@ -86,5 +88,15 @@ export class AuthService {
   async logout(userId: string): Promise<UserDocument> {
     await this.refreshService.removeTokensForUser(userId);
     return this.authService.findByIdAndDelete(userId);
+  }
+
+  async verify(userId: string, otp: string): Promise<void> {
+    try {
+      await this.otpService.verifyOtp(userId, otp);
+      await this.authService.updateStatus(userId, 'active');
+    } catch (error) {
+      console.log(`Verify OTP error: ${error.message}`);
+      throw new UnauthorizedException();
+    }
   }
 }

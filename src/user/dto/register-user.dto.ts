@@ -51,5 +51,8 @@ export class CreateRegisterDto {
     @IsString()
     @IsOptional()
     about_text:string
+
+    @IsOptional()
+    is_active:boolean
 }
 

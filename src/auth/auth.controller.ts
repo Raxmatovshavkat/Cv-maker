@@ -32,8 +32,8 @@ export class AuthController {
 
 
   @Get('users')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles("admin", "superadmin")
+  // @Roles("admin", "superadmin")
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Get current users' })
   @ApiResponse({ status: 200, description: 'Return current users' })
   @ApiResponse({ status: 404, description: 'Not Found' })
@@ -42,7 +42,6 @@ export class AuthController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiOperation({ summary: 'get user approad id' })
   @ApiResponse({ status: 200, description: 'Return current users' })
   @ApiResponse({ status: 404, description: 'Not Found' })
@@ -50,12 +49,34 @@ export class AuthController {
     return await this.authService.me(id);
   }
 
-
+  @Post('verify')
+  @ApiOperation({ summary: 'Verify user OTP' })
+  @ApiResponse({
+    status: 200,
+    description: 'OTP successfully verified and user status updated to active.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request. OTP is invalid or expired.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found. OTP record does not exist.',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error. Something went wrong during OTP verification.',
+  })
+  async verify(@Body() createOtpDto: { userId: string; otp: string }) {
+    const { userId, otp } = createOtpDto;
+    return await this.authService.verify(userId, otp);
+  }
 
   @Delete(':id')
   async logout(@Param('id') id: string) {
     return await this.authService.logout(id);
   }
+
 
   @Post('refresh')
   async refresh(@Body('refresh_token') refreshToken: string) {

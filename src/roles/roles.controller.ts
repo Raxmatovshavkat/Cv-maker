@@ -7,7 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('roles')
 @Controller('roles')
 export class RolesController {
-  constructor(private readonly rolesService: RolesService) {}
+  constructor(private readonly rolesService: RolesService) { }
 
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {
@@ -34,8 +34,11 @@ export class RolesController {
     return this.rolesService.remove(id);
   }
 
+
+
   @Delete('status/:id')
-  delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string) {
     return this.rolesService.delete(id);
   }
+
 }

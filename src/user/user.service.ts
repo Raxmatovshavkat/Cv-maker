@@ -7,12 +7,15 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from './models/user.model';
 import * as otpGenerator from 'otp-generator';
 import { EmailService } from 'src/mail/mail.service';
+import { OtpService } from 'src/otp/otp.service';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(User.name) 
+    private readonly userModel: Model<UserDocument>,
     private readonly emailService: EmailService,
+    private readonly otpService:OtpService
   ) { }
 
   async register(createUserDto: CreateRegisterDto): Promise<UserDocument> {
@@ -29,7 +32,8 @@ export class UserService {
 
     try {
       await this.emailService.sendEmail(email, otp);
-      const savedUser = await user.save();
+      const savedUser = await user.save()
+      await this.otpService.saveOtp({ email, otp })
       return savedUser;
     } catch (error) {
       console.error('Registration error:', error);
@@ -90,6 +94,19 @@ export class UserService {
     } catch (error) {
       console.error('Registration error:', error.message);
       throw new Error('Failed to find user');
+    }
+  }
+
+  async updateStatus(userId: string, status: string): Promise<UserDocument> {
+    try {
+      const user = await this.userModel.findByIdAndUpdate(userId, { is_active: status === 'active' }, { new: true }).exec();
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return user;
+    } catch (error) {
+      console.error('Update status error:', error);
+      throw new InternalServerErrorException('Failed to update user status');
     }
   }
 }

@@ -37,6 +37,9 @@ export class User {
 
     @Prop({ required: true, type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Roles" }] })
     roleId: string
+
+    @Prop()
+    is_active:boolean
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
