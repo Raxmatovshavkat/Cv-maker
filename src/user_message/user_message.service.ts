@@ -62,4 +62,15 @@ export class UserMessageService {
       throw new InternalServerErrorException()
     }
   }
+  async delete(id: string | any) {
+    const message = await this.userMessageService.findById(id);
+    if (!message) {
+      throw new NotFoundException('message not found');
+    }
+
+    message.is_active = false;
+    await this.userMessageService.updateOne(id, message)
+
+    return { message: 'message status updated to false' };
+  }
 }

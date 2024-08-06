@@ -53,4 +53,8 @@ export class FilesController {
   async remove(@Param('id') id: string) {
     return await this.filesService.remove(id);
   }
+  @Delete('status/:id')
+  async delete(@Param('id') id: string) {
+    return await this.filesService.delete(id);
+  }
 }

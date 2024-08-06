@@ -9,7 +9,7 @@ export class CreateSocialMediaDto {
     link:Array<string>;
     @IsNotEmpty()
     @IsBoolean()
-    isActive:boolean;
+    is_active:boolean;
     @IsString()
     @IsNotEmpty()
     accountName:string;

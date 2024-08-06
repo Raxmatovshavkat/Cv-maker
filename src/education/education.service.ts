@@ -37,5 +37,15 @@ export class EducationService {
     return await this.educationService.findByIdAndDelete(id);
   }
 
+  async delete(id: string | any) {
+    const education = await this.educationService.findById(id);
+    if (!education) {
+      throw new NotFoundException('education not found');
+    }
 
+    education.is_active = false;
+    await this.educationService.updateOne(id, education)
+
+    return { education: 'social media status updated to false' };
+  }
 }

@@ -34,4 +34,16 @@ export class SocialMediaService {
   async remove(id: string) {
     return await this.socialMediaService.findByIdAndUpdate(id);
   }
+
+  async delete(id: string | any) {
+    const socialMedia = await this.socialMediaService.findById(id);
+    if (!socialMedia) {
+      throw new NotFoundException('socialMedia not found');
+    }
+
+    socialMedia.is_active = false;
+    await this.socialMediaService.updateOne(id, socialMedia)
+
+    return { socialMedia: 'social media status updated to false' };
+  }
 }

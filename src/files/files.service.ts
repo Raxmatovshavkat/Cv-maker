@@ -10,13 +10,13 @@ export class FilesService {
   constructor(@InjectModel("Files") private readonly fileModel: Model<FileDocument>) { }
 
   async create(createFileDto: CreateFileDto) {
-    return await this.fileModel.create({...createFileDto});
+    return await this.fileModel.create({ ...createFileDto });
   }
 
   async findAll() {
     return await this.fileModel.find().exec();
   }
-  
+
   async findAllActive(): Promise<File[]> {
     const file = await this.fileModel.find({ is_active: true }).exec();
     if (!file || file.length === 0) {
@@ -35,5 +35,16 @@ export class FilesService {
 
   async remove(id: string) {
     return await this.fileModel.findByIdAndDelete(id).exec();
+  }
+  async delete(id: string | any) {
+    const file = await this.fileModel.findById(id);
+    if (!file) {
+      throw new NotFoundException('file not found');
+    }
+
+    file.is_active = false;
+    await this.fileModel.updateOne(id, file)
+
+    return { file: 'file status updated to false' };
   }
 }

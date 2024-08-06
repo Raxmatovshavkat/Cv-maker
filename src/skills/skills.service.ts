@@ -7,7 +7,7 @@ import { Skill } from './entities/skill.entity';
 
 @Injectable()
 export class SkillsService {
-  constructor(@InjectModel('skills') private readonly skillService:Model<Skill>){}
+  constructor(@InjectModel('skills') private readonly skillService: Model<Skill>) { }
 
   async create(createskillDto: CreateSkillDto) {
     return await new this.skillService(createskillDto).save();
@@ -34,5 +34,16 @@ export class SkillsService {
 
   async remove(id: string) {
     return await this.skillService.findByIdAndUpdate(id);
+  }
+  async delete(id: string | any) {
+    const skill = await this.skillService.findById(id);
+    if (!skill) {
+      throw new NotFoundException('skill not found');
+    }
+
+    skill.is_active = false;
+    await this.skillService.updateOne(id, skill)
+
+    return { skill: 'skill status updated to false' };
   }
 }

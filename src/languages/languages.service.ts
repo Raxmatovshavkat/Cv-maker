@@ -8,14 +8,14 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class LanguagesService {
-  constructor(@InjectModel(Language.name) private readonly languageService:Model<Language>){}
+  constructor(@InjectModel(Language.name) private readonly languageService: Model<Language>) { }
   async create(createLanguageDto: CreateLanguageDto) {
     return await new this.languageService(createLanguageDto)
   }
 
   async findAll() {
-    const lang=await this.languageService.find()
-    if (!lang){
+    const lang = await this.languageService.find()
+    if (!lang) {
       throw new NotFoundException()
     }
     return lang
@@ -44,5 +44,17 @@ export class LanguagesService {
     }
     lang.deleteOne()
     return `Deleted`
+  }
+
+  async delete(id: string | any) {
+    const language = await this.languageService.findById(id);
+    if (!language) {
+      throw new NotFoundException('language not found');
+    }
+
+    language.is_active = false;
+    await this.languageService.updateOne(id, language)
+
+    return { language: 'skill status updated to false' };
   }
 }

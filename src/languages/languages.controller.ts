@@ -33,4 +33,9 @@ export class LanguagesController {
   async remove(@Param('id') id: string) {
     return this.languagesService.remove(id);
   }
+
+  @Delete('status/:id')
+  async delete(@Param('id') id: string) {
+    return this.languagesService.delete(id);
+  }
 }

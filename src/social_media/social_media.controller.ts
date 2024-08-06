@@ -40,4 +40,9 @@ export class SocialMediaController {
   remove(@Param('id') id: string) {
     return this.socialMediaService.remove(id);
   }
+
+  @Delete('status/:id')
+  delete(@Param('id') id: string) {
+    return this.socialMediaService.delete(id);
+  }
 }

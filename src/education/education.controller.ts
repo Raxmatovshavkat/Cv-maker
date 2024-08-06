@@ -41,4 +41,8 @@ export class EducationController {
   async remove(@Param('id') id: string) {
     return await this.educationService.remove(id);
   }
+  @Delete('status/:id')
+  async delete(@Param('id') id: string) {
+    return await this.educationService.delete(id);
+  }
 }

@@ -12,7 +12,7 @@ export class socialMedia {
     link:Array<string>;
     
     @Prop()
-    isActive:boolean
+    is_active:boolean
     
     @Prop()
     accountName:string;

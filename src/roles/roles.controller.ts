@@ -33,4 +33,9 @@ export class RolesController {
   remove(@Param('id') id: string) {
     return this.rolesService.remove(id);
   }
+
+  @Delete('status/:id')
+  delete(@Param('id') id: string) {
+    return this.rolesService.delete(id);
+  }
 }

@@ -36,4 +36,9 @@ export class ExpreinceController {
   async remove(@Param('id') id: string) {
     return await this.expreinceService.remove(id);
   }
+
+  @Delete('status/:id')
+  async delete(@Param('id') id: string) {
+    return await this.expreinceService.delete(id);
+  }
 }

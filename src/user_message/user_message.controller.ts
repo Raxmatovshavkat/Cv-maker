@@ -34,4 +34,8 @@ export class UserMessageController {
   async remove(@Param('id') id: string) {
     return this.userMessageService.remove(id);
   }
+  @Delete('status/:id')
+  async delete(@Param('id') id: string) {
+    return this.userMessageService.delete(id);
+  }
 }

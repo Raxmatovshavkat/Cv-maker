@@ -28,8 +28,8 @@ export class RolesService {
 
   async findOne(id: string) {
     try {
-      const role=await this.roleService.findById(id)
-      if (!role){
+      const role = await this.roleService.findById(id)
+      if (!role) {
         throw new NotFoundException()
       }
       return role
@@ -52,10 +52,10 @@ export class RolesService {
     }
   }
 
-  async remove(id: string):Promise<any> {
-   try {
-      const role=await this.roleService.findById(id)
-      if (!role){
+  async remove(id: string): Promise<any> {
+    try {
+      const role = await this.roleService.findById(id)
+      if (!role) {
         throw new NotFoundException()
       }
       return role.deleteOne()
@@ -63,5 +63,16 @@ export class RolesService {
       console.log(error.message)
       throw new InternalServerErrorException()
     }
+  }
+  async delete(id: string | any) {
+    const role = await this.roleService.findById(id);
+    if (!role) {
+      throw new NotFoundException('role not found');
+    }
+
+    role.is_active = false;
+    await this.roleService.updateOne(id, role)
+
+    return { role: 'role status updated to false' };
   }
 }
