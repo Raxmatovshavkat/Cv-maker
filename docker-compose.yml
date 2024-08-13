@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   app:
     container_name: backend
@@ -14,18 +16,11 @@ services:
       - database
     environment:
       - DB_URL=mongodb://cv-maker
-    command: npm run start:dev
+    command: pnpm run start:dev
+
   database:
     image: mongo:latest
     container_name: mongodb
     ports:
       - 27017:27017
     restart: always
-    # volumes:
-    #   - mongodata:/data/db
-    os:
-      image: ubuntu
-      container_name: ubuntu-os
-    # networks:
-    #   backend-net:
-    #     driver: bridge
