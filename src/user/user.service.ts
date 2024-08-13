@@ -33,7 +33,7 @@ export class UserService {
     try {
       await this.emailService.sendEmail(email, otp);
       const savedUser = await user.save()
-      await this.otpService.saveOtp({ email, otp })
+      await this.otpService.saveOtp({ userId: savedUser._id.toString(), otp })
       return savedUser;
     } catch (error) {
       console.error('Registration error:', error);

@@ -30,6 +30,7 @@ export class CreateRegisterDto {
     postcode: string
 
     @IsString()
+    @ApiProperty({example:'+998991234567'})
     phone: string;
 
     @IsString()
