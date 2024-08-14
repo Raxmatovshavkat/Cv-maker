@@ -1,24 +1,12 @@
-# Use the official Node.js 18 image as a base image
-FROM node:18-alpine
-
-# Set the working directory in the container
+FROM --platform=linux/amd64 node:alpine As builder
 WORKDIR /app
-
-# Copy package.json and pnpm-lock.yaml files
-COPY package*.json ./
-COPY pnpm-lock.yaml ./
-
-# Install pnpm globally
-RUN npm install -g pnpm
-
-# Install dependencies using pnpm
-RUN pnpm install
-
-# Copy the rest of the application code
+COPY /*.json ./
+RUN npm install
 COPY . .
+RUN npm run build
 
-# Expose the port the app will run on
-EXPOSE 5000
-
-# Command to run the application in development mode
-CMD ["pnpm", "run", "start:dev"]
+FROM --platform=linux/amd64 node:alpine
+WORKDIR /app
+COPY --from=builder /app ./
+EXPOSE 3000
+CMD ["npm", "run", "start:prod"]

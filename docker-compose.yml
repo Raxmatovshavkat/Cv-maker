@@ -1,26 +1,33 @@
-version: '3.8'
+version: "3.3"
 
 services:
   app:
-    container_name: backend
+    container_name: "cv-maker"
     build:
       context: ./
-      dockerfile: Dockerfile
-    ports:
-      - '5000:5000'
-    volumes:
-      - .:/app
-      - /app/node_modules
-    restart: unless-stopped
     depends_on:
-      - database
-    environment:
-      - DB_URL=mongodb://cv-maker
-    command: pnpm run start:dev
-
-  database:
-    image: mongo:latest
-    container_name: mongodb
+      - mongo
+    restart: unless-stopped
     ports:
-      - 27017:27017
+      - "3000:3000"
+    environment:
+      - DB_PORT=${DB_PORT}
+      - mongoURI=mongodb://mongo:27017/cv-maker
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_USERNAME=${EMAIL_USERNAME}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - DATABASE_ACCESS_TOKEN_SECRET=${DATABASE_ACCESS_TOKEN_SECRET}
+
+  mongo:
+    container_name: "mongo-db"
+    image: mongo:4.4
     restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
